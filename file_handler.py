@@ -1,6 +1,5 @@
 import csv
 import os
-import user
 
 
 class FileHandler:
@@ -35,13 +34,6 @@ class FileHandler:
                 row = new_info
             final_rows.append(row)
         self.write_file(final_rows, mode="w")
-
-    # def check_unique_username(self, username):
-    #     all_rows = self.read_file()
-    #     for row in all_rows:
-    #         if row['username'] == username:
-    #             return True
-    #     return False
 
     def delete_row(self, username):
         all_rows = self.read_file()

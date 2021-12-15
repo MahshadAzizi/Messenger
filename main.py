@@ -1,5 +1,5 @@
 import user
-# import logging
+import logging
 import file_handler
 
 
@@ -18,11 +18,13 @@ while True:
                 log_in = user.SignIn(username, password)
                 if log_in.check_password():
                     print("Welcome back, " + username)
+                    break
                 elif not log_in.check_password():
                     count += 1
                     continue
         elif not user.SignIn.check_username(username):
             print("This username do not exist!")
+
     elif msg1.lower() == 'n':
         msg2 = input("Do you want to create a new account in this messenger?(y/n) ")
         if msg2.lower() == 'y':

@@ -3,6 +3,10 @@ import os
 import binascii
 import hashlib
 import file_handler
+import logging
+
+logging.basicConfig(filename='users_info.log', level=logging.INFO,
+                    format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 
 class SignUp:
@@ -10,6 +14,8 @@ class SignUp:
         self.username = username
         self.password = password
         self.confirm_pass = confirm_pass
+
+        logging.info('Sign up user: {}'.format(self.username))
 
     def pattern_user(self):
         pattern = "^[A-Za-z][A-Za-z0-9_]{7,29}$"
@@ -48,6 +54,8 @@ class SignIn:
     def __init__(self, username, password):
         self.username = username
         self.password = password
+
+        logging.info('Login user: {}'.format(self.username))
 
     def verify_password(self, stored_password, provided_password):
         """Verify a stored password against one provided by user"""
