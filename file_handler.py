@@ -2,6 +2,7 @@ import csv
 import os
 import user
 
+
 class FileHandler:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -16,8 +17,6 @@ class FileHandler:
 
     def write_file(self, info, mode="a"):
         if isinstance(info, dict):
-            if self.check_unique_username(info['username']):
-                return "username already exists"
             fields = info.keys()
             info = [info]
         elif isinstance(info, list):
@@ -37,12 +36,12 @@ class FileHandler:
             final_rows.append(row)
         self.write_file(final_rows, mode="w")
 
-    def check_unique_username(self, username):
-        all_rows = self.read_file()
-        for row in all_rows:
-            if row['username'] == username:
-                return True
-        return False
+    # def check_unique_username(self, username):
+    #     all_rows = self.read_file()
+    #     for row in all_rows:
+    #         if row['username'] == username:
+    #             return True
+    #     return False
 
     def delete_row(self, username):
         all_rows = self.read_file()

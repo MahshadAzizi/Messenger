@@ -1,4 +1,5 @@
 import user
+# import logging
 import file_handler
 
 
@@ -10,11 +11,20 @@ while True:
         Login
         """
         username = input("please enter a username: ")
-        password = input("please enter a password: ")
-        log_in = user.SignIn(username, password)
-        print(log_in.check_user())
+        count = 0
+        if user.SignIn.check_username(username):
+            while count < 3:
+                password = input("please enter a password: ")
+                log_in = user.SignIn(username, password)
+                if log_in.check_password():
+                    print("Welcome back, " + username)
+                elif not log_in.check_password():
+                    count += 1
+                    continue
+        elif not user.SignIn.check_username(username):
+            print("This username do not exist!")
     elif msg1.lower() == 'n':
-        msg2 = input("Do you want to create a new account in this messenger?(y/n)")
+        msg2 = input("Do you want to create a new account in this messenger?(y/n) ")
         if msg2.lower() == 'y':
             """
             Sign Up
@@ -67,7 +77,8 @@ while True:
                             break
                     print("Password is valid.")
                     print(create_user.check_pass())
-
+            hashed_password = create_user.hash_password()
+            add_user = open_file.write_file({'username': username, 'password': hashed_password})
         elif msg2.lower() == 'n':
             print("Ok! Good luck")
             break
