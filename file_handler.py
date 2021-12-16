@@ -8,7 +8,7 @@ class FileHandler:
 
     def read_file(self):
         if os.path.exists(self.file_path):
-            with open(self.file_path, 'r', encoding='utf-8-sig') as myfile:
+            with open(self.file_path, 'r',encoding='utf-8-sig') as myfile:
                 reader = csv.DictReader(myfile)
                 return list(reader)
         else:

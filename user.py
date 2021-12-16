@@ -75,8 +75,8 @@ class SignIn:
         for row in read_file:
             if row['username'] == username:
                 return True
-            else:
-                return False
+        else:
+            return False
 
     def check_password(self):
         open_file = file_handler.FileHandler('Data/users.csv')
