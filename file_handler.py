@@ -26,6 +26,13 @@ class FileHandler:
                 writer.writeheader()
             writer.writerows(info)
 
+    @staticmethod
+    def write_new_file(dirName, csv_type):
+        with open(os.path.join(dirName, csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
+            fieldnames = ['id', 'username', 'message']
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+
     def edit_row(self, new_info):
         all_rows = self.read_file()
         final_rows = []
