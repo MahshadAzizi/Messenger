@@ -6,6 +6,7 @@ import pandas as pd
 import file_handler
 import logging
 
+
 logging.basicConfig(filename='users_info.log', level=logging.INFO,
                     format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
@@ -17,7 +18,7 @@ class User:
 
     def signUp(self, confirm_pass):
         self.confirm_pass = confirm_pass
-
+        # self.logging_user(dirName)
         logging.info('Sign up user: {}'.format(self.username))
 
     def pattern_user(self):
@@ -53,6 +54,7 @@ class User:
             return "Incorrect password"
 
     def signIn(self):
+        # self.logging_user(dirName)
         logging.info('Login user: {}'.format(self.username))
 
     def verify_password(self, stored_password, provided_password):
@@ -68,8 +70,8 @@ class User:
 
     @staticmethod
     def check_username(username):
-        open_file = file_handler.FileHandler('Data/users.csv')
-        read_file = open_file.read_file()
+        read_file = file_handler.FileHandler.read_file_user('Data/users.csv')
+        # read_file = open_file.read_file()
         for row in read_file:
             if row['username'] == username.lower():
                 return True
@@ -77,8 +79,8 @@ class User:
             return False
 
     def check_password(self):
-        open_file = file_handler.FileHandler('Data/users.csv')
-        read_file = open_file.read_file()
+        read_file = file_handler.FileHandler.read_file_user('Data/users.csv')
+        # read_file = open_file.read_file()
         for row in read_file:
             if row['username'] == self.username:
                 if self.verify_password(row['password'], self.password):
@@ -88,9 +90,16 @@ class User:
 
     @staticmethod
     def check_id(dirName, csv_type):
-        read_file = file_handler.FileHandler.read_file_user(dirName, csv_type)
+        open_file = file_handler.FileHandler(dirName, csv_type)
+        read_file = open_file.read_file()
         df = pd.DataFrame(read_file)
         index = df.index
         number_of_rows = len(index)
         id_number = number_of_rows + 1
         return id_number
+
+    # @staticmethod
+    # def logging_user(self, dirName):
+    #     path = os.path.join(dirName + '.log')
+    #     logging.basicConfig(filename=path, level=logging.INFO,
+    #                         format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')

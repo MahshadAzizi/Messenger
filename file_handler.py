@@ -4,20 +4,21 @@ import pandas as pd
 
 
 class FileHandler:
-    def __init__(self, file_path):
-        self.file_path = file_path
+    def __init__(self, dirName, csv_type):
+        self.dirName = dirName
+        self.csv_type = csv_type
 
     def read_file(self):
-        if os.path.exists(self.file_path):
-            with open(self.file_path, 'r', encoding='utf-8-sig') as myfile:
+        if os.path.exists(os.path.join(self.dirName, self.csv_type + '.csv')):
+            with open(os.path.join(self.dirName, self.csv_type + '.csv'), 'r', encoding='utf-8-sig') as myfile:
                 reader = csv.DictReader(myfile)
                 return list(reader)
         else:
             return "path is incorrect"
 
     @staticmethod
-    def read_file_user(dirName, csv_type):
-        with open(os.path.join(dirName, csv_type + '.csv'), 'r', encoding='utf-8-sig') as f:
+    def read_file_user(path):
+        with open(path, 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             return list(reader)
 
@@ -25,27 +26,48 @@ class FileHandler:
         if isinstance(info, dict):
             fields = info.keys()
             info = [info]
+            with open(os.path.join(self.dirName, self.csv_type + '.csv'), mode, encoding='utf-8-sig') as myfile:
+                writer = csv.DictWriter(myfile, fieldnames=fields)
+                if myfile.tell() == 0:
+                    writer.writeheader()
+                writer.writerows(info)
         elif isinstance(info, list):
-            # if len(info) != 0:
+            if len(info) != 0:
+                fields = info[0].keys()
+                with open(os.path.join(self.dirName, self.csv_type + '.csv'), mode, encoding='utf-8-sig') as myfile:
+                    writer = csv.DictWriter(myfile, fieldnames=fields)
+                    if myfile.tell() == 0:
+                        writer.writeheader()
+                    writer.writerows(info)
+            else:
+                if self.csv_type == 'Inbox':
+                    self.write_new_file_inbox()
+                else:
+                    self.write_new_file()
+
+    @staticmethod
+    def write_file_user(path, info, mode="a"):
+        if isinstance(info, dict):
+            fields = info.keys()
+            info = [info]
+
+        elif isinstance(info, list):
             fields = info[0].keys()
-            # else:
-            #     return self.read_file()
-        with open(self.file_path, mode, encoding='utf-8-sig') as myfile:
+
+        with open(path, mode, encoding='utf-8-sig') as myfile:
             writer = csv.DictWriter(myfile, fieldnames=fields)
             if myfile.tell() == 0:
                 writer.writeheader()
             writer.writerows(info)
 
-    @staticmethod
-    def write_new_file(dirName, csv_type):
-        with open(os.path.join(dirName, csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
+    def write_new_file(self):
+        with open(os.path.join(self.dirName, self.csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
             fieldnames = ['id', 'username', 'message']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
 
-    @staticmethod
-    def write_new_file_inbox(dirName, csv_type):
-        with open(os.path.join(dirName, csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
+    def write_new_file_inbox(self):
+        with open(os.path.join(self.dirName, self.csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
             fieldnames = ['id', 'username', 'message', 'readMessage']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
@@ -68,13 +90,4 @@ class FileHandler:
         data_with_index = data_with_index.drop(id)
         data_with_index.reset_index(inplace=True)
         self.write_file(data_with_index.to_dict('records'), mode='w')
-        # update_df = df.drop(id)
         # print(data_with_index.to_dict('records'))
-        # print(df)
-
-        # final_rows = []
-        # for row in all_row:
-        #     if row['id'] == str(id):
-        #         continue
-        #     final_rows.append(row)
-        # self.write_file(final_rows, mode="w")
