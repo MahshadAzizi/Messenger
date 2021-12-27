@@ -141,23 +141,3 @@ class User:
                 return True
         else:
             return False
-
-
-# check = User.check_locked_user('mahshad98')
-
-# def pass_count(self):
-#     count = 0
-#     while count < 3:
-#         if self.check_password():
-#         elif not create_user.check_password():
-#             count += 1
-#             continue
-#     if count == 3:
-#         print("Your account has been locked!")
-#         logging.info('user locked: {}'.format(username))
-
-# @staticmethod
-# def logging_user(self, dirName):
-#     path = os.path.join(dirName + '.log')
-#     logging.basicConfig(filename=path, level=logging.INFO,
-#                         format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
