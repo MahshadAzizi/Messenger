@@ -90,4 +90,3 @@ class FileHandler:
         data_with_index = data_with_index.drop(id)
         data_with_index.reset_index(inplace=True)
         self.write_file(data_with_index.to_dict('records'), mode='w')
-        # print(data_with_index.to_dict('records'))

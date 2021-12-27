@@ -4,8 +4,8 @@ import binascii
 import hashlib
 import pandas as pd
 import file_handler
+import datetime
 import logging
-
 
 logging.basicConfig(filename='users_info.log', level=logging.INFO,
                     format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
@@ -18,10 +18,10 @@ class User:
 
     def signUp(self, confirm_pass):
         self.confirm_pass = confirm_pass
-        # self.logging_user(dirName)
         logging.info('Sign up user: {}'.format(self.username))
 
     def pattern_user(self):
+        """The pattern that the username must have"""
         pattern = "^[A-Za-z][A-Za-z0-9_]{7,29}$"
         patt = re.compile(pattern)
         matched = re.search(patt, self.username)
@@ -31,6 +31,7 @@ class User:
             return False
 
     def pattern_pass(self):
+        """The pattern that the password must have"""
         pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
         patt = re.compile(pattern)
         matched = re.search(patt, self.password)
@@ -48,6 +49,7 @@ class User:
         return (salt + password_hash).decode('ascii')
 
     def check_pass(self):
+        """confirm password"""
         if self.password == self.confirm_pass:
             return "Welcome, " + self.username
         else:
@@ -70,8 +72,8 @@ class User:
 
     @staticmethod
     def check_username(username):
+        """Checks the username"""
         read_file = file_handler.FileHandler.read_file_user('Data/users.csv')
-        # read_file = open_file.read_file()
         for row in read_file:
             if row['username'] == username.lower():
                 return True
@@ -79,8 +81,8 @@ class User:
             return False
 
     def check_password(self):
+        """Compares the entered password with the user"""
         read_file = file_handler.FileHandler.read_file_user('Data/users.csv')
-        # read_file = open_file.read_file()
         for row in read_file:
             if row['username'] == self.username:
                 if self.verify_password(row['password'], self.password):
@@ -90,6 +92,7 @@ class User:
 
     @staticmethod
     def check_id(dirName, csv_type):
+        """ Gives each message an ID """
         open_file = file_handler.FileHandler(dirName, csv_type)
         read_file = open_file.read_file()
         df = pd.DataFrame(read_file)
@@ -98,8 +101,63 @@ class User:
         id_number = number_of_rows + 1
         return id_number
 
-    # @staticmethod
-    # def logging_user(self, dirName):
-    #     path = os.path.join(dirName + '.log')
-    #     logging.basicConfig(filename=path, level=logging.INFO,
-    #                         format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    @staticmethod
+    def check_id_user(dirName, csv_type, id):
+        read_file = file_handler.FileHandler(dirName, csv_type)
+        read_inbox = read_file.read_file()
+        for row in read_inbox:
+            if row['id'] == id:
+                return True
+        else:
+            return False
+
+    @staticmethod
+    def locked_user(username):
+        now = datetime.datetime.now()
+        now_srt = now.strftime("%Y-%m-%d %H:%M:%S")
+        info = {'username': username, 'locktime': now_srt}
+        write_locked_user = file_handler.FileHandler.write_file_user('Data/LockedUser.csv', info)
+
+    @staticmethod
+    def check_locked_time_user(username):
+        read_file = file_handler.FileHandler.read_file_user('Data/LockedUser.csv')
+        for row in read_file:
+            if row['username'] == username:
+                lockTime = row['locktime']
+                date = datetime.datetime.strptime(lockTime, '%Y-%m-%d %H:%M:%S')
+                now = datetime.datetime.now()
+                duration = now - date
+                duration_in_s = duration.total_seconds()
+                if duration_in_s >= 3600:
+                    return True
+                else:
+                    return False
+
+    @staticmethod
+    def check_locked_user(username):
+        read_file = file_handler.FileHandler.read_file_user('Data/LockedUser.csv')
+        for row in read_file:
+            if row['username'] == username:
+                return True
+        else:
+            return False
+
+
+# check = User.check_locked_user('mahshad98')
+
+# def pass_count(self):
+#     count = 0
+#     while count < 3:
+#         if self.check_password():
+#         elif not create_user.check_password():
+#             count += 1
+#             continue
+#     if count == 3:
+#         print("Your account has been locked!")
+#         logging.info('user locked: {}'.format(username))
+
+# @staticmethod
+# def logging_user(self, dirName):
+#     path = os.path.join(dirName + '.log')
+#     logging.basicConfig(filename=path, level=logging.INFO,
+#                         format='%(levelname)s*%(asctime)s -%(name)s -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
