@@ -2,6 +2,7 @@ import os
 import user
 import file_handler
 import logging
+import datetime
 import message_management
 
 print("Hello!\nWelcome to Messenger")
@@ -34,6 +35,8 @@ while True:
                         logging.warning('user locked: {}'.format(username))
                         continue
                     dirName = f'Data/{username}'
+                    now = datetime.datetime.now()
+                    now_srt = now.strftime("%Y-%m-%d %H:%M:%S")
                     read_file = file_handler.FileHandler(dirName, 'Inbox')
                     read_inbox = read_file.read_file()
                     read_message = message_management.Inbox(dirName, 'Inbox')
@@ -65,13 +68,13 @@ while True:
                                             check_id = user.User.check_id(dirUser, 'Inbox')
                                             open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                             send_message = open_inbox.write_file(
-                                                {'id': check_id, 'username': username, 'message': text,
+                                                {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                                  'readMessage': ''})
                                             check_id_2 = user.User.check_id(dirName, 'Sent')
                                             open_sent = file_handler.FileHandler(dirName, 'Sent')
                                             sent_message = open_sent.write_file(
                                                 {'id': check_id_2, 'username': reply_message2, 'message': text,
-                                                 'readMessage': ''})
+                                                 'time': now_srt})
                                             logging.info('user {} send message to {} !'.format(username, reply_message2))
                                             print("Message sent successfully!")
                                         elif msg6.lower() == 'n':
@@ -79,7 +82,7 @@ while True:
                                             open_draft = file_handler.FileHandler(dirName, 'Draft')
                                             draft_message = open_draft.write_file(
                                                 {'id': check_id, 'username': reply_message2, 'message': text,
-                                                 'readMessage': ''})
+                                                 'time': now_srt})
                                         else:
                                             print("Wrong answer!")
                                             continue
@@ -123,13 +126,13 @@ while True:
                                             check_id = user.User.check_id(dirUser, 'Inbox')
                                             open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                             send_message = open_inbox.write_file(
-                                                {'id': check_id, 'username': username, 'message': text,
+                                                {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                                  'readMessage': ''})
                                             check_id_2 = user.User.check_id(dirName, 'Sent')
                                             open_sent = file_handler.FileHandler(dirName, 'Sent')
                                             sent_message = open_sent.write_file(
                                                 {'id': check_id_2, 'username': reply_message2, 'message': text,
-                                                 'readMessage': ''})
+                                                 'time': now_srt})
 
                                             open_draft = file_handler.FileHandler(dirName, 'Draft')
                                             delete_message_draft = open_draft.delete_row(msg4)
@@ -141,7 +144,7 @@ while True:
                                             open_draft = file_handler.FileHandler(dirName, 'Draft')
                                             draft_message = open_draft.write_file(
                                                 {'id': check_id, 'username': reply_message2, 'message': text,
-                                                 'readMessage': ''})
+                                                 'time': now_srt})
                                         else:
                                             logging.error('Wrong answer! user: {}'.format(username))
                                             print("Wrong answer!")
@@ -198,13 +201,12 @@ while True:
                                     check_id = user.User.check_id(dirUser, 'Inbox')
                                     open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                     send_message = open_inbox.write_file(
-                                        {'id': check_id, 'username': username, 'message': text,
+                                        {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                          'readMessage': ''})
                                     check_id_2 = user.User.check_id(dirName, 'Sent')
                                     open_sent = file_handler.FileHandler(dirName, 'Sent')
                                     sent_message = open_sent.write_file(
-                                        {'id': check_id_2, 'username': username_2, 'message': text,
-                                         'readMessage': ''})
+                                        {'id': check_id_2, 'username': username_2, 'message': text, 'time': now_srt})
 
                                     logging.info('user {} send message to {} !'.format(username, username_2))
                                     print("Message sent successfully!")
@@ -212,8 +214,7 @@ while True:
                                     check_id = user.User.check_id(dirName, 'Draft')
                                     open_draft = file_handler.FileHandler(dirName, 'Draft')
                                     draft_message = open_draft.write_file(
-                                        {'id': check_id, 'username': username_2, 'message': text,
-                                         'readMessage': ''})
+                                        {'id': check_id, 'username': username_2, 'message': text, 'time': now_srt})
                                 else:
                                     logging.error('Wrong answer! user: {}'.format(username))
                                     print("Wrong answer!")
@@ -249,6 +250,8 @@ while True:
                     logging.warning('user locked: {}'.format(username))
                     continue
                 dirName = f'Data/{username}'
+                now = datetime.datetime.now()
+                now_srt = now.strftime("%Y-%m-%d %H:%M:%S")
                 read_file = file_handler.FileHandler(dirName, 'Inbox')
                 read_inbox = read_file.read_file()
                 read_message = message_management.Inbox(dirName, 'Inbox')
@@ -281,13 +284,13 @@ while True:
                                         check_id = user.User.check_id(dirUser, 'Inbox')
                                         open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                         send_message = open_inbox.write_file(
-                                            {'id': check_id, 'username': username, 'message': text,
+                                            {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                              'readMessage': ''})
                                         check_id_2 = user.User.check_id(dirName, 'Sent')
                                         open_sent = file_handler.FileHandler(dirName, 'Sent')
                                         sent_message = open_sent.write_file(
                                             {'id': check_id_2, 'username': reply_message2, 'message': text,
-                                             'readMessage': ''})
+                                             'time': now_srt})
                                         logging.info('user {} send message to {} !'.format(username, reply_message2))
                                         print("Message sent successfully!")
                                     elif msg6.lower() == 'n':
@@ -295,7 +298,7 @@ while True:
                                         open_draft = file_handler.FileHandler(dirName, 'Draft')
                                         draft_message = open_draft.write_file(
                                             {'id': check_id, 'username': reply_message2, 'message': text,
-                                             'readMessage': ''})
+                                             'time': now_srt})
                                     else:
                                         print("Wrong answer!")
                                         continue
@@ -340,13 +343,13 @@ while True:
                                         check_id = user.User.check_id(dirUser, 'Inbox')
                                         open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                         send_message = open_inbox.write_file(
-                                            {'id': check_id, 'username': username, 'message': text,
+                                            {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                              'readMessage': ''})
                                         check_id_2 = user.User.check_id(dirName, 'Sent')
                                         open_sent = file_handler.FileHandler(dirName, 'Sent')
                                         sent_message = open_sent.write_file(
                                             {'id': check_id_2, 'username': reply_message2, 'message': text,
-                                             'readMessage': ''})
+                                             'time': now_srt})
 
                                         open_draft = file_handler.FileHandler(dirName, 'Draft')
                                         delete_message_draft = open_draft.delete_row(msg4)
@@ -358,7 +361,7 @@ while True:
                                         open_draft = file_handler.FileHandler(dirName, 'Draft')
                                         draft_message = open_draft.write_file(
                                             {'id': check_id, 'username': reply_message2, 'message': text,
-                                             'readMessage': ''})
+                                             'time': now_srt})
                                     else:
                                         print("Wrong answer!")
                                         continue
@@ -415,13 +418,12 @@ while True:
                                 check_id = user.User.check_id(dirUser, 'Inbox')
                                 open_inbox = file_handler.FileHandler(dirUser, 'Inbox')
                                 send_message = open_inbox.write_file(
-                                    {'id': check_id, 'username': username, 'message': text,
+                                    {'id': check_id, 'username': username, 'message': text, 'time': now_srt,
                                      'readMessage': ''})
                                 check_id_2 = user.User.check_id(dirName, 'Sent')
                                 open_sent = file_handler.FileHandler(dirName, 'Sent')
                                 sent_message = open_sent.write_file(
-                                    {'id': check_id_2, 'username': username_2, 'message': text,
-                                     'readMessage': ''})
+                                    {'id': check_id_2, 'username': username_2, 'message': text,'time': now_srt})
 
                                 logging.info('user {} send message to {} !'.format(username, username_2))
                                 print("Message sent successfully!")
@@ -429,8 +431,7 @@ while True:
                                 check_id = user.User.check_id(dirName, 'Draft')
                                 open_draft = file_handler.FileHandler(dirName, 'Draft')
                                 draft_message = open_draft.write_file(
-                                    {'id': check_id, 'username': username_2, 'message': text,
-                                     'readMessage': ''})
+                                    {'id': check_id, 'username': username_2, 'message': text,'time': now_srt})
                             else:
                                 logging.error('Wrong answer! user: {}'.format(username))
                                 print("Wrong answer!")
@@ -504,7 +505,8 @@ while True:
                     print(create_user.check_pass())
             print("Your account was created successfully!")
             hashed_password = create_user.hash_password()
-            add_user = file_handler.FileHandler.write_file_user('Data/users.csv', {'username': username, 'password': hashed_password})
+            add_user = file_handler.FileHandler.write_file_user('Data/users.csv', {'username': username,
+                                                                                   'password': hashed_password})
             dirName = f'Data/{username}'
             if not os.path.exists(dirName):
                 os.makedirs(dirName)

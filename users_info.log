@@ -62,3 +62,13 @@ INFO*27-Dec-21 22:30:32 -root -Login user: leilaa33
 INFO*27-Dec-21 22:32:41 -root -Login user: leilaa33
 INFO*27-Dec-21 22:33:51 -root -Login user: leilaa33
 INFO*27-Dec-21 22:34:19 -root -user log out: leilaa33
+INFO*27-Dec-21 22:55:01 -root -Sign up user: fateme25
+INFO*27-Dec-21 22:55:20 -root -Login user: fateme25
+INFO*27-Dec-21 22:55:30 -root -user log out: fateme25
+INFO*27-Dec-21 22:56:04 -root -Sign up user: gishaa20
+INFO*27-Dec-21 22:56:21 -root -Login user: gishaa20
+INFO*27-Dec-21 22:56:39 -root -user gishaa20 send message to fateme25 !
+INFO*27-Dec-21 22:56:59 -root -user log out: gishaa20
+INFO*27-Dec-21 22:57:10 -root -Login user: fateme25
+ERROR*27-Dec-21 22:57:26 -root -Wrong answer! user: fateme25
+INFO*27-Dec-21 22:57:27 -root -user log out: fateme25

@@ -62,13 +62,13 @@ class FileHandler:
 
     def write_new_file(self):
         with open(os.path.join(self.dirName, self.csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
-            fieldnames = ['id', 'username', 'message']
+            fieldnames = ['id', 'username', 'message', 'time']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
 
     def write_new_file_inbox(self):
         with open(os.path.join(self.dirName, self.csv_type + '.csv'), "w", encoding='utf-8-sig') as f:
-            fieldnames = ['id', 'username', 'message', 'readMessage']
+            fieldnames = ['id', 'username', 'message', 'time','readMessage']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
 
